@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Visualizing Sort</title>
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="shortcut icon" href="assets/favicon.png" type="image/x-icon">
+
+  <script src="scripts/main.js"></script>
+  <script src="scripts/sort.js"></script>
+
+</head>
+<body>
+  
+  <nav>
+
+    <h1>Visualizing Sort</h1>
+
+    <div>
+
+      <span id="value">30</span>
+      <input oninput="updateValue(this.value)" type="range" value="30" min="6" max="150" >
+      
+      <div class="new-array">
+        <button id="create" onclick="newArr()">New Array</button>
+        <button id="selective">New</button>
+        <div id="new-dropdown">
+          <button class="new" onclick="newArr(10)">10</button>
+          <button class="new" onclick="newArr(25)">25</button>
+          <button class="new" onclick="newArr(50)">50</button>
+          <button class="new" onclick="newArr(75)">75</button>
+          <button class="new" onclick="newArr(100)">100</button>
+        </div>
+      </div>
+  
+      <div class="sort-array">
+        <button>Sort</button>
+        <div id="sort-dropdown">
+          <ul>
+            <li onclick="sortBy('bubble')"><a href="#">Bubble Sort</a></li>
+            <li onclick="sortBy('selection')"><a href="#">Selection Sort</a></li>
+            <li onclick="sortBy('insertion')"><a href="#">Insertion Sort</a></li>
+            <li onclick="sortBy('merge')"><a href="#">Merge Sort</a></li>
+            <li onclick="sortBy('quick')"><a href="#">Quick Sort</a></li>
+            <li onclick="sortBy('bogo')"><a href="#">Bogo Sort</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </nav>
+
+  <h4 id="subtitle">Select a sort to begin</h4>
+
+  <canvas></canvas>
+
+  <footer></footer>
+
+  <script src="scripts/sketch.js"></script>
+
+</body>
+</html>
