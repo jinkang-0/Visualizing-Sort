@@ -2,12 +2,18 @@ var value = 30;
 var array = [];
 var sorting = false;
 var loopdeloop;
-var delay = 100;
+var delay = 80;
 var states = [];
+var sorted = false;
 
 function updateValue(val) {
   value = val;
   document.getElementById("value").innerHTML = value;
+}
+
+function updateDelay(del) {
+  delay = parseInt(del);
+  document.getElementById("delay").innerHTML = delay;
 }
 
 function newArr(len) {
@@ -26,6 +32,8 @@ function newArr(len) {
     document.getElementById('subtitle').innerHTML = 'Select a sort to begin';
     console.log('Created new array with length:', length);
     randomize();
+
+    sorted = false;
   }
 }
 
@@ -45,7 +53,7 @@ function randomize() {
 function sortBy(type) {
   clearInterval(loopdeloop);
 
-  if (sorting == false) {
+  if (sorting == false && sorted == false) {
     switch(type) {
       case 'bubble':
         bubbleSort();
@@ -66,6 +74,8 @@ function sortBy(type) {
         bogoSort();
     }
     console.log('Performing', type, 'sort');
+  } else if (sorted == true) {
+    document.getElementById('subtitle').innerHTML = "Remember to create a new array before you sort again!";
   }
 }
 

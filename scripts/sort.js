@@ -14,7 +14,7 @@ async function bubbleSort() {
         states[i] = 3;
         states[i+1] = 3;
         swap(i, i+1);
-        await new Promise((resolve, reject) => setTimeout(resolve, delay + 100));
+        await new Promise((resolve, reject) => setTimeout(resolve, delay * 2));
       }
       states[i] = 1;
       states[i+1] = 1;
@@ -26,6 +26,7 @@ async function bubbleSort() {
 
   // sorting complete
   sorting = false;
+  sorted = true;
   draw();
 }
 
@@ -60,13 +61,14 @@ async function selectionSort() {
     states[i] = 3;
     states[index] = 3;
     swap(i, index);
-    await new Promise((resolve, reject) => setTimeout(resolve, delay + 100));
+    await new Promise((resolve, reject) => setTimeout(resolve, delay * 2));
     states[i] = 0;
     states[index] = 0;
   }
 
   // sorting complete
   sorting = false;
+  sorted = true;
   draw();
 }
 
@@ -85,12 +87,17 @@ async function insertionSort() {
     for (var j = i; j > 0; j--) {
       states[j] = 1;
       if (array[j] < array[j-1]) {
+        // highlight
         states[j] = 3;
         states[j-1] = 3;
+
         swap(j, j-1);
-        await new Promise((resolve, reject) => setTimeout(resolve, delay + 100));
+        
+        // pause to show swap
+        await new Promise((resolve, reject) => setTimeout(resolve, delay));
         states[j-1] = 0;
       }
+      // pause for trace
       await new Promise((resolve, reject) => setTimeout(resolve, delay));
       states[j] = 0;
     }
@@ -98,6 +105,7 @@ async function insertionSort() {
 
   // sorting complete
   sorting = false;
+  sorted = true;
   draw();
 }
 
@@ -117,6 +125,7 @@ async function initMerge() {
 
   // sorting complete
   sorting = false;
+  sorted = true;
   draw();
 }
 
@@ -219,6 +228,7 @@ async function initQuick() {
   
   // sorting complete
   sorting = false;
+  sorted = true;
   draw();
 }
 
@@ -255,7 +265,7 @@ async function partition(start, end) {
       
       swap(index, i);
 
-      await new Promise((resolve, reject) => setTimeout(resolve, 100));
+      await new Promise((resolve, reject) => setTimeout(resolve, delay));
     }
 
     // pause to highlight
@@ -271,7 +281,7 @@ async function partition(start, end) {
   // place pivot in between
   swap(index+1, end);
   
-  await new Promise((resolve, reject) => setTimeout(resolve, delay + 100));
+  await new Promise((resolve, reject) => setTimeout(resolve, delay * 2));
   states[index+1] = 0;
   states[end] = 0;
 

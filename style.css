@@ -35,7 +35,7 @@ nav h1 {
 nav div {
   position: relative;
   display: flex;
-  width: clamp(20%, 500px, 50%);
+  width: clamp(20%, 600px, 50%);
 }
 
 nav span, nav input {
@@ -113,7 +113,8 @@ h4 {
 
 /* triangle */
 .new-array div::before,
-.sort-array div::before {
+.sort-array div::before,
+.delays div::before {
   content: '';
   position: absolute;
   top: -20px;
@@ -127,7 +128,8 @@ h4 {
 
 /* dropdown */
 .new-array div,
-.sort-array div {
+.sort-array div,
+.delays div {
   display: none;
   flex-direction: column;
   position: absolute;
@@ -145,14 +147,17 @@ h4 {
   text-align: center;
 }
 
-input {
-  appearance: none;
+nav div input {
   margin-top: 10px;
   width: 95%;
+  margin-right: 25px;
+}
+
+input {
   height: 2px;
+  appearance: none;
   background: lightgray;
   outline: none;
-  margin-right: 25px;
 }
 
 /* slider thumb */
@@ -166,6 +171,26 @@ input::-webkit-slider-thumb {
 .sort-array button:focus + div,
 .sort-array:focus-within > div{
   display: flex;
+}
+
+.delays button:focus + div,
+.delays:focus-within > div {
+  display: flex;
+}
+
+/* delays */
+#delay-dropdown {
+  width: 100%;
+}
+
+.delays span {
+  margin-left: 10px;
+}
+
+.delays input {
+  width: 90%;
+  transform: translate(10px);
+  margin-bottom: 10px;
 }
 
 /* create button */
@@ -199,7 +224,7 @@ footer {
 
 /* media queries */
 @media (max-width: 700px) {
-  nav div > input, nav div > span {
+  nav div > input, nav div > span, #create, .delays {
     display: none;
   }
 
@@ -210,10 +235,6 @@ footer {
 
   #selective {
     display: block;
-  }
-
-  #create {
-    display: none;
   }
 }
 
