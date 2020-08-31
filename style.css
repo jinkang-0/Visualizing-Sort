@@ -156,13 +156,23 @@ nav div input {
 input {
   height: 2px;
   appearance: none;
+  -webkit-appearance: none;
   background: lightgray;
   outline: none;
 }
 
 /* slider thumb */
-input::-moz-range-thumb,
 input::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  background: gray;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  outline: none;
+}
+
+input::-moz-range-thumb {
   background: gray;
   outline: none;
 }
