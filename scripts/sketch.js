@@ -25,12 +25,15 @@ function draw() {
     // 1 = looping
     // 2 = selected
     // 3 = swapping
+    // 4 = special
     if (states[i] == 1) {
       c.fillStyle = "blue";
     } else if (states[i] == 2) {
       c.fillStyle = "purple";
     } else if (states[i] == 3) {
       c.fillStyle = "yellow";
+    } else if (states[i] == 4) {
+      c.fillStyle = "green";
     } else {
       c.fillStyle = "black";
     }

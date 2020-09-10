@@ -82,24 +82,20 @@ async function insertionSort() {
 
   // sort through array starting at 1
   for (var i = 1; i < array.length; i++) {
-    await new Promise((resolve, reject) => setTimeout(resolve, delay));
     // place smaller element behind i
     for (var j = i; j > 0; j--) {
-      states[j] = 1;
       if (array[j] < array[j-1]) {
         // highlight
-        states[j] = 3;
-        states[j-1] = 3;
+        states[j-1] = 4;
 
         swap(j, j-1);
         
         // pause to show swap
         await new Promise((resolve, reject) => setTimeout(resolve, delay));
         states[j-1] = 0;
+      } else {
+        break;
       }
-      // pause for trace
-      await new Promise((resolve, reject) => setTimeout(resolve, delay));
-      states[j] = 0;
     }
   }
 
@@ -168,7 +164,7 @@ async function merge(left, right, arr) {
       left.shift();
 
       // highlight
-      states[array.indexOf(arr[a])] = 2;
+      states[array.indexOf(arr[a])] = 4;
       await new Promise((resolve, reject) => setTimeout(resolve, delay));
       states[array.indexOf(arr[a])] = 0;
 
@@ -179,7 +175,7 @@ async function merge(left, right, arr) {
       right.shift();
       
       // highlight
-      states[array.indexOf(arr[a])] = 2;
+      states[array.indexOf(arr[a])] = 4;
       await new Promise((resolve, reject) => setTimeout(resolve, delay));
       states[array.indexOf(arr[a])] = 0;
 
@@ -193,7 +189,7 @@ async function merge(left, right, arr) {
     arr[a] = left[0];
     left.shift();
     
-    states[array.indexOf(arr[a])] = 2;
+    states[array.indexOf(arr[a])] = 4;
     await new Promise((resolve, reject) => setTimeout(resolve, delay));
     states[array.indexOf(arr[a])] = 0;
 
@@ -205,7 +201,7 @@ async function merge(left, right, arr) {
     arr[a] = right[0];
     right.shift();
     
-    states[array.indexOf(arr[a])] = 2;
+    states[array.indexOf(arr[a])] = 4;
     await new Promise((resolve, reject) => setTimeout(resolve, delay));
     states[array.indexOf(arr[a])] = 0;
 
@@ -280,8 +276,7 @@ async function partition(start, end) {
 
   // place pivot in between
   swap(index+1, end);
-  
-  await new Promise((resolve, reject) => setTimeout(resolve, delay * 2));
+
   states[index+1] = 0;
   states[end] = 0;
 
