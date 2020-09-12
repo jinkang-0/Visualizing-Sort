@@ -10,17 +10,24 @@ async function bubbleSort() {
   for (var j = 1; j < array.length; j++) {
     // move biggest to last
     for (var i = 0; i < array.length - j; i++) {
-      if (array[i] > array[i+1]) {
-        states[i] = 3;
-        states[i+1] = 3;
-        swap(i, i+1);
-        await new Promise((resolve, reject) => setTimeout(resolve, delay * 2));
-      }
-      states[i] = 1;
+
       states[i+1] = 1;
+
+      if (array[i] > array[i+1]) {
+        states[i+1] = 3;
+        states[i] = 3;
+        swap(i, i+1);
+      }
+
       await new Promise((resolve, reject) => setTimeout(resolve, delay));
       states[i] = 0;
       states[i+1] = 0;
+      
+      if (sorting == false) {
+        resetStates();
+        return;
+      }
+
     }
   }
 
@@ -41,27 +48,38 @@ async function selectionSort() {
   // sort through array (left to right)
   for (var i = 0; i < array.length; i++) {
 
+    // search for the minimum value
     var min = array[i];
     var index = i;
 
-    // find minimum
     for (var j = i; j < array.length; j++) {
+
+      // if less than minimum, set equal to minimum
       if (array[j] < min) {
         min = array[j];
         index = j;
       }
+
+      // highlight looping
       states[index] = 2;
       states[j] = 1;
       await new Promise((resolve, reject) => setTimeout(resolve, delay));
       states[index] = 0;
       states[j] = 0;
+
+      if (sorting == false) {
+        resetStates();
+        return;
+      }
     }
 
     // put min at current index, then loop again
+    swap(i, index);
+    
+    // highlight swap
     states[i] = 3;
     states[index] = 3;
-    swap(i, index);
-    await new Promise((resolve, reject) => setTimeout(resolve, delay * 2));
+    await new Promise((resolve, reject) => setTimeout(resolve, delay*2));
     states[i] = 0;
     states[index] = 0;
   }
@@ -85,14 +103,19 @@ async function insertionSort() {
     // place smaller element behind i
     for (var j = i; j > 0; j--) {
       if (array[j] < array[j-1]) {
-        // highlight
-        states[j-1] = 4;
 
         swap(j, j-1);
-        
-        // pause to show swap
+
+        // highlight swap
+        states[j-1] = 4;
         await new Promise((resolve, reject) => setTimeout(resolve, delay));
         states[j-1] = 0;
+
+        if (sorting == false) {
+          draw();
+          return;
+        }
+
       } else {
         break;
       }
@@ -117,6 +140,12 @@ async function initMerge() {
   // start sorting
   var temp = array;
   await new Promise((resolve, reject) => {resolve( mergeSort(temp) )});
+  
+  if (sorting == false) {
+    resetStates();
+    return;
+  }
+
   array = temp;
 
   // sorting complete
@@ -129,6 +158,7 @@ async function mergeSort(arr) {
 
   // return if length = 1
   if (arr.length <= 1) return; 
+  if (sorting == false) return;
 
   // split in half
   var left = [];
@@ -153,12 +183,18 @@ async function mergeSort(arr) {
 
 async function merge(left, right, arr) {
 
+  if (sorting == false) return;
+
   var a = 0;
   var start = array.indexOf(left[0]);
 
   // compare
   while (left[0] && right[0]) {
     if (left[0] < right[0]) {
+      if (sorting == false) {
+        resetStates();
+        return;
+      }
       array[start+a] = left[0];
       arr[a] = left[0];
       left.shift();
@@ -170,6 +206,10 @@ async function merge(left, right, arr) {
 
       a++;
     } else {
+      if (sorting == false) {
+        resetStates();
+        return;
+      }
       array[start+a] = right[0];
       arr[a] = right[0];
       right.shift();
@@ -185,6 +225,10 @@ async function merge(left, right, arr) {
 
   // add missing
   while (left[0]) {
+    if (sorting == false) {
+      resetStates();
+      return;
+    }
     array[start+a] = left[0];
     arr[a] = left[0];
     left.shift();
@@ -197,6 +241,10 @@ async function merge(left, right, arr) {
   }
 
   while (right[0]) {
+    if (sorting == false) {
+      resetStates();
+      return;
+    }
     array[start+a] = right[0];
     arr[a] = right[0];
     right.shift();
@@ -221,6 +269,7 @@ async function initQuick() {
   
   // start sorting
   await new Promise((resolve, reject) => {resolve( quickSort(0, array.length-1) )});
+  if (sorting == false) return;
   
   // sorting complete
   sorting = false;
@@ -229,6 +278,8 @@ async function initQuick() {
 }
 
 async function quickSort(start, end) {
+
+  if (sorting == false) return;
 
   // if start index < end index, keep partitioning
   if (start < end) {
@@ -260,14 +311,19 @@ async function partition(start, end) {
       states[index] = 3;
       
       swap(index, i);
-
-      await new Promise((resolve, reject) => setTimeout(resolve, delay));
     }
 
     // pause to highlight
     await new Promise((resolve, reject) => setTimeout(resolve, delay));
     states[i] = 0;
     states[index] = 0;
+
+    // shutdown check
+    if (sorting == false) {
+      resetStates();
+      return;
+    }
+
   }
 
   // highlight end swap
@@ -279,6 +335,12 @@ async function partition(start, end) {
 
   states[index+1] = 0;
   states[end] = 0;
+
+  // shutdown check
+  if (sorting == false) {
+    resetStates();
+    return;
+  }
 
   // return pivot point
   return index+1;

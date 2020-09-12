@@ -17,24 +17,24 @@ function updateDelay(del) {
 }
 
 function newArr(len) {
-  if (sorting == false) {
-    clearInterval(loopdeloop);
+  sorting = false;
 
-    var length = len || value;
-    
-    array = [];
-    for (var i = 0; i < length; i++) {
-      var height = ((canvas.height - 20) / length) * (i+1);
-      array.push(height);
-      states.push(0);
-    }
+  clearInterval(loopdeloop);
+
+  var length = len || value;
   
-    document.getElementById('subtitle').innerHTML = 'Select a sort to begin';
-    console.log('Created new array with length:', length);
-    randomize();
-
-    sorted = false;
+  array = [];
+  for (var i = 0; i < length; i++) {
+    var height = ((canvas.height - 20) / length) * (i+1);
+    array.push(height);
+    states.push(0);
   }
+
+  document.getElementById('subtitle').innerHTML = 'Select a sort to begin';
+  console.log('Created new array with length:', length);
+  randomize();
+
+  sorted = false;
 }
 
 function randomize() {
@@ -54,26 +54,19 @@ function sortBy(type) {
   clearInterval(loopdeloop);
 
   if (sorting == false && sorted == false) {
-    switch(type) {
-      case 'bubble':
-        bubbleSort();
-        break;
-      case 'selection':
-        selectionSort();
-        break;
-      case 'insertion':
-        insertionSort();
-        break;
-      case 'merge':
-        initMerge();
-        break;
-      case 'quick':
-        initQuick();
-        break;
-      case 'bogo':
-        bogoSort();
+    if (type == 'bubble') {
+      bubbleSort();
+    } else if (type == 'selection') {
+      selectionSort();
+    } else if (type == 'insertion') {
+      insertionSort();
+    } else if (type == 'merge') {
+      initMerge();
+    } else if (type == 'quick') {
+      initQuick();
+    } else if (type == 'bogo') {
+      bogoSort();
     }
-    console.log('Performing', type, 'sort');
   } else if (sorted == true) {
     document.getElementById('subtitle').innerHTML = "Remember to create a new array before you sort again!";
   }
@@ -83,4 +76,11 @@ function swap(a, b) {
   var temp = array[a];
   array[a] = array[b];
   array[b] = temp;
+}
+
+function resetStates() {
+  for (var i = 0; i < states.length; i++) {
+    states[i] = 0;
+  }
+  draw();
 }
