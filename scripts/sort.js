@@ -3,9 +3,6 @@ async function bubbleSort() {
 
   animate();
 
-  // set subtitle
-  document.getElementById('subtitle').innerHTML = 'Bubble Sort';
-
   // sort through array
   for (var j = 1; j < array.length; j++) {
     // move biggest to last
@@ -13,6 +10,7 @@ async function bubbleSort() {
 
       states[i+1] = 2;
 
+      comparisons++;
       if (array[i] > array[i+1]) {
         swap(i, i+1);
       }
@@ -39,9 +37,6 @@ async function selectionSort() {
 
   animate();
 
-  // set subtitle
-  document.getElementById('subtitle').innerHTML = 'Selection Sort';
-
   // sort through array (left to right)
   for (var i = 0; i < array.length; i++) {
 
@@ -52,6 +47,7 @@ async function selectionSort() {
     for (var j = i; j < array.length; j++) {
 
       // if less than minimum, set equal to minimum
+      comparisons++;
       if (array[j] < min) {
         min = array[j];
         index = j;
@@ -91,14 +87,12 @@ async function insertionSort() {
   sorting = true;
 
   animate();
-  
-  // set subtitle
-  document.getElementById('subtitle').innerHTML = 'Insertion Sort';
 
   // sort through array starting at 1
   for (var i = 1; i < array.length; i++) {
     // place smaller element behind i
     for (var j = i; j > 0; j--) {
+      comparisons++;
       if (array[j] < array[j-1]) {
 
         swap(j, j-1);
@@ -128,9 +122,6 @@ async function insertionSort() {
 async function initMerge() {
   sorting = true;
 
-  // set subtitle
-  document.getElementById('subtitle').innerHTML = 'Merge Sort';
-
   // start animation
   animate();
 
@@ -154,6 +145,7 @@ async function initMerge() {
 async function mergeSort(arr) {
 
   // return if length = 1
+  comparisons++;
   if (arr.length <= 1) return; 
   if (sorting == false) return;
 
@@ -187,6 +179,7 @@ async function merge(left, right, arr) {
 
   // compare
   while (left[0] && right[0]) {
+    comparisons++;
     if (left[0] < right[0]) {
       if (sorting == false) {
         resetStates();
@@ -222,6 +215,7 @@ async function merge(left, right, arr) {
 
   // add missing
   while (left[0]) {
+    comparisons++;
     if (sorting == false) {
       resetStates();
       return;
@@ -238,6 +232,7 @@ async function merge(left, right, arr) {
   }
 
   while (right[0]) {
+    comparisons++;
     if (sorting == false) {
       resetStates();
       return;
@@ -258,9 +253,6 @@ async function merge(left, right, arr) {
 async function initQuick() {
   sorting = true;
 
-  // set subtitle
-  document.getElementById('subtitle').innerHTML = 'Quick Sort';
-
   // start animation
   animate();
   
@@ -279,6 +271,7 @@ async function quickSort(start, end) {
   if (sorting == false) return;
 
   // if start index < end index, keep partitioning
+  comparisons++;
   if (start < end) {
     var pivot = await new Promise((resolve, reject) => {resolve( partition(start, end) )});
     await new Promise((resolve, reject) => {resolve( quickSort(start, pivot-1) )});
@@ -300,6 +293,7 @@ async function partition(start, end) {
     // looping indicator
     states[i] = 1;
     
+    comparisons++;
     if (array[i] <= array[end]) {
       index++;
       
@@ -347,15 +341,16 @@ async function partition(start, end) {
 async function bogoSort() {
   sorting = true;
 
-  // set subtitle
-  document.getElementById('subtitle').innerHTML = 'Bogosort';
+  // start animation
+  animate();
 
-  await new Promise((resolve, reject) => setTimeout(resolve, delay));
-
+  // randomize array
   randomize();
+  await new Promise((resolve, reject) => setTimeout(resolve, delay));
   
   // if sorted, stop loop
   for (var i = 0; i < array.length-1; i++) {
+    comparisons++;
     if (array[i] > array[i+1]) {
       break;
     } else if (i == array.length-2) {
@@ -367,6 +362,7 @@ async function bogoSort() {
     }
   }
 
+  // if not sorted, randomize again
   if (sorting == true) bogoSort();
 
 }

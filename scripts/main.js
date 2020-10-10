@@ -4,6 +4,12 @@ var sorting = false;
 var delay = 80;
 var states = [];
 var sorted = false;
+var comparisons = 0;
+var time = 0;
+var algorithm;
+var timer = setInterval(() => {
+  if (sorting) time++;
+}, 1);
 
 function updateValue(val) {
   value = val;
@@ -49,17 +55,25 @@ function randomize() {
 
 function sortBy(type) {
   if (sorting == false && sorted == false) {
+    comparisons = 0;
+    time = 0;
     if (type == 'bubble') {
+      algorithm = "Bubble Sort";
       bubbleSort();
     } else if (type == 'selection') {
+      algorithm = "Selection Sort";
       selectionSort();
     } else if (type == 'insertion') {
+      algorithm = "Insertion Sort";
       insertionSort();
     } else if (type == 'merge') {
+      algorithm = "Mergesort";
       initMerge();
     } else if (type == 'quick') {
+      algorithm = "Quicksort";
       initQuick();
     } else if (type == 'bogo') {
+      algorithm = "Bogosort";
       bogoSort();
     }
   } else if (sorted == true) {

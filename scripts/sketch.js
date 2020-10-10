@@ -6,7 +6,7 @@ canvas.height = window.innerHeight - 100;
 
 window.addEventListener("resize", function() {
   canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight - 100;
+  canvas.height = window.innerHeight - 77;
   draw();
 })
 
@@ -46,5 +46,8 @@ function animate() {
   
   draw();
 
-  if (sorting == true) requestAnimationFrame(animate);
+  if (sorting == true) {
+    document.getElementById('subtitle').innerHTML = `${algorithm} <br> Comparisons: ${comparisons} <br> Time: ${time}ms`;
+    requestAnimationFrame(animate);
+  }
 }
