@@ -1,7 +1,6 @@
 var value = 30;
 var array = [];
 var sorting = false;
-var loopdeloop;
 var delay = 80;
 var states = [];
 var sorted = false;
@@ -18,8 +17,6 @@ function updateDelay(del) {
 
 function newArr(len) {
   sorting = false;
-
-  clearInterval(loopdeloop);
 
   var length = len || value;
   
@@ -51,8 +48,6 @@ function randomize() {
 }
 
 function sortBy(type) {
-  clearInterval(loopdeloop);
-
   if (sorting == false && sorted == false) {
     if (type == 'bubble') {
       bubbleSort();

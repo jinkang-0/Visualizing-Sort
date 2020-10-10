@@ -11,16 +11,13 @@ async function bubbleSort() {
     // move biggest to last
     for (var i = 0; i < array.length - j; i++) {
 
-      states[i+1] = 1;
+      states[i+1] = 2;
 
       if (array[i] > array[i+1]) {
-        states[i+1] = 3;
-        states[i] = 3;
         swap(i, i+1);
       }
 
       await new Promise((resolve, reject) => setTimeout(resolve, delay));
-      states[i] = 0;
       states[i+1] = 0;
       
       if (sorting == false) {
@@ -347,27 +344,29 @@ async function partition(start, end) {
 
 }
 
-function bogoSort() {
+async function bogoSort() {
+  sorting = true;
 
   // set subtitle
   document.getElementById('subtitle').innerHTML = 'Bogosort';
 
-  var length = array.length;
+  await new Promise((resolve, reject) => setTimeout(resolve, delay));
 
-  // randomize array
-  loopdeloop = setInterval(() => {
-    randomize();
-    
-    // if sorted, stop loop
-    for (var i = 0; i < length-1; i++) {
-      if (array[i] > array[i+1]) {
-        break;
-      } else if (i == length-2) {
-        console.log("IT WORKS!?");
-        clearInterval(loopdeloop);
-      }
+  randomize();
+  
+  // if sorted, stop loop
+  for (var i = 0; i < array.length-1; i++) {
+    if (array[i] > array[i+1]) {
+      break;
+    } else if (i == array.length-2) {
+      console.log("IT WORKS!?");
+      sorting = false;
+      sorted = true;
+      draw();
+      return;
     }
+  }
 
-  }, delay);
+  if (sorting == true) bogoSort();
 
 }

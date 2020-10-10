@@ -31,7 +31,7 @@ function draw() {
     } else if (states[i] == 2) {
       c.fillStyle = "purple";
     } else if (states[i] == 3) {
-      c.fillStyle = "steelblue";
+      c.fillStyle = "royalblue";
     } else if (states[i] == 4) {
       c.fillStyle = "darkslateblue";
     } else {
